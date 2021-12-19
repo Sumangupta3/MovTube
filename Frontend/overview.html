@@ -11,21 +11,46 @@
     <h3 class="overview">
         About
     </h3>
-    <div class="movie-detail">
-       <div class="question">
-           Name 
-       </div>
-       <div class="answer">
-           : Dil Bechara 
-       </div>
-    </div>
-    <div class="movie-detail">
-       <div class="question">
-           Name 
-       </div>
-       <div class="answer">
-           : Dil Bechara 
-       </div>
-    </div>
+    <div id="detail"></div>
+    <script>
+        getdata();
+        function getdata(){
+            let details = document.getElementById("detail");
+            let curr = JSON.parse(localStorage.getItem('overview'));
+            details.innerHTML = 
+            `<div class="movie-detail">
+               <div class="question">
+                Title 
+               </div>
+               <div class="answer">
+                   : ${curr.Title} 
+               </div>
+            </div>
+            <div class="movie-detail">
+               <div class="question">
+                imdbRating 
+               </div>
+               <div class="answer">
+                   : ${curr.imdbRating}
+               </div>
+            </div>
+            <div class="movie-detail">
+               <div class="question">
+                Released 
+               </div>
+               <div class="answer">
+                   : ${curr.Released} 
+               </div>
+            </div>
+            <div class="movie-detail">
+               <div class="question">
+                Director 
+               </div>
+               <div class="answer">
+                   : ${curr.Director} 
+               </div>
+            </div>`
+        }
+    </script>
 </body>
 </html>

@@ -66,6 +66,9 @@
 
       fetch(loginurl, data).then(res => {return res.json()}).then((data)=>{
         if(data.result){
+          console.log(data);
+          localStorage.setItem('mobtube-email',data.email);
+          localStorage.setItem('mobtube-movieData',JSON.stringify(data.movieData))
           location.href = "./home.html"
         }else{
           alert(data.message)

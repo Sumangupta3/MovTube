@@ -12,14 +12,21 @@ mongoose.connect(mongoUri, {
 });
 
 app.post("/", (req, res) => {
+
     User.findOneAndUpdate({ email: req.body.email },{movieData: req.body.movieData}, (err, user) => {
         if(err){
-            res.send(err);
+            throw (err);
         }else{
-            res.send({
-                status: true,
-                movieData: movieData
-            });
+            User.findOne({ email: req.body.email }, (err, doc) => {
+              if(err){
+                throw err;
+              }else{
+                res.send({
+                  "status": true,
+                  "movieData": doc.movieData
+                })
+              }
+            })
         }
       });
 });

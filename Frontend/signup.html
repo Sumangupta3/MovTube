@@ -74,6 +74,9 @@
         fetch(signurl, data).then(res => { return res.json() }).then((data) => {
           console.log(data)
           if (data.result) {
+            localStorage.setItem('mobtube-email',data.email);
+            localStorage.setItem('mobtube-movieData',JSON.stringify(data.movieData));
+
             location.href = "./login.html"
           } else {
             alert(data.message)

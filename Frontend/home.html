@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="./asset/flow.png" type="image/x-icon">
+  <!-- <link rel="shortcut icon" href="./asset/flow.png" type="image/x-icon"> -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
@@ -22,31 +22,21 @@
   <header>
     <form id="search-form">
       <input type="search" id="search-bar" placeholder="Search...">
-      <button>Search</button>
+      <button onclick="findMovie(event)">Search</button>
     </form>
   </header>
   <div class="main-itis">
-    <div class="searchMovie">
-      <a class="movie" href="overview.html">
-        <img src="./Images/movie.jpg">
-        <div class="movie-info">
-          <h5 class="movie-title">Movie Title</h5>
-          <span class="rating">10</h3>
-        </div>
-      </a>
-      <div class="playlist-btn">
-        <button type="button" class="btn btn-secondary">Add to List</button>
-      </div>
+    <div class="searchMovie display-none" id="searchCard">
     </div>
-    <!-- <div class="flex-display">
-      <h3 class="find">FIND YOUR MOVIE NOW...</h3>
-    </div> -->
+    <div class="flex-display">
+      <h3 class="find" id="message">FIND YOUR MOVIE NOW...</h3>
+    </div>
   </div>
   <div class="flex-display playlist">
     <h3>My Playlist</h3>
   </div>
-  <div class="main-itis">
-    <div class="searchMovie">
+  <div class="main-itis" id="playlist">
+    <!-- <div class="searchMovie">
       <a class="movie" href="overview.html">
         <img src="./Images/movie.jpg">
         <div class="movie-info">
@@ -57,32 +47,128 @@
       <div class="playlist-btn">
         <button type="button" class="btn btn-secondary">Remove</button>
       </div>
-    </div>
-    <div class="searchMovie">
-      <a class="movie" href="overview.html">
-        <img src="./Images/movie.jpg">
-        <div class="movie-info">
-          <h5 class="movie-title">Movie Title</h5>
-          <span class="rating">10</h3>
-        </div>
-      </a>
-      <div class="playlist-btn ">
-        <button type="button" class="btn btn-secondary">Remove</button>
-      </div>
-    </div>
-    <div class="searchMovie">
-      <a class="movie" href="overview.html">
-        <img src="./Images/movie.jpg">
-        <div class="movie-info">
-          <h5 class="movie-title">Movie Title</h5>
-          <span class="rating">10</h3>
-        </div>
-      </a>
-      <div class="playlist-btn">
-        <button type="button" class="btn btn-secondary">Remove</button>
-      </div>
-    </div>
+    </div> -->
   </div>
+  <script>
+
+    function addToList(e) {
+      e.preventDefault();
+      let movieData = JSON.parse(localStorage.getItem('mobtube-movieData'));
+      let data = JSON.parse(localStorage.getItem('data'));
+      let flag = true;
+      movieData.forEach(element => {
+        if (data.imdbID === element.imdbID) {
+          flag = false;
+        }
+      });
+      if (flag) {
+        movieData.push(data);
+        let url = "http://localhost:1500/app/playlist";
+        let body = {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: localStorage.getItem('mobtube-email'),
+            movieData: movieData
+          })
+        }
+        fetch(url, body).then(res => { return res.json() }).then((result) => {
+          if (result.status) {
+            localStorage.setItem('mobtube-movieData', JSON.stringify(result.movieData));
+            getPlaylist();
+          }
+        })
+      } else {
+        alert("Already Exist in Your Playlist")
+      }
+    }
+
+    function findMovie(e) {
+      e.preventDefault();
+      let searchkey = document.getElementById('search-bar').value;
+      let url = `http://www.omdbapi.com/?t=${searchkey}&apikey=11aa1054`
+      fetch(url).then(res => { return res.json() }).then(data => {
+        if (data.Response === 'False') {
+          let message = document.getElementById('message');
+          message.innerHTML = data.Error
+        } else {
+          localStorage.setItem('data', JSON.stringify(data))
+          message.innerHTML = '';
+          let searchCard = document.getElementById('searchCard');
+          searchCard.classList.remove('display-none');
+          searchCard.innerHTML =
+            `<a class="movie" href="overview.html" id="overview-search">
+            <img src="${data["Poster"]}">
+            <div class="movie-info">
+              <h5 class="movie-title">${data["Title"]}</h5>
+              <span class="rating">${data["imdbRating"]}</h3>
+            </div>
+          </a>
+          <div class="playlist-btn">
+            <button type="button" class="btn btn-secondary" onclick="addToList(event)">Add to List</button>
+          </div>`
+          document.getElementById("overview-search").addEventListener('click', () => {
+            localStorage.setItem('overview',JSON.stringify(data));
+          })
+        }
+      })
+    }
+
+    function getPlaylist() {
+      let movieData = JSON.parse(localStorage.getItem('mobtube-movieData'));
+      let playlist = document.getElementById("playlist");
+      if (movieData.length === 0) {
+        playlist.innerHTML =
+          `<div class="flex-display">
+          <h3 class="find">ADD YOUR FAV HERE...</h3>
+        </div>`
+      } else {
+        playlist.innerHTML = '';
+        for (let i = 0; i < movieData.length; i++) {
+          let div = document.createElement('div');
+          div.setAttribute('class', 'searchMovie');
+          div.innerHTML =
+            `<a class="movie" href="overview.html" id="overview-${i}">
+            <img src="${movieData[i]["Poster"]}">
+            <div class="movie-info">
+              <h5 class="movie-title">${movieData[i]["Title"]}</h5>
+              <span class="rating">${movieData[i]["imdbRating"]}</h3>
+            </div>
+          </a>
+          <div class="playlist-btn">
+            <button type="button" class="btn btn-secondary" id="${"remove-btn-" + i}">Remove</button>
+          </div>`
+          playlist.appendChild(div);
+          document.getElementById("overview-"+i).addEventListener('click', () =>{
+            localStorage.setItem('overview',JSON.stringify(movieData[i]));
+          })
+          document.getElementById("remove-btn-" + i).addEventListener('click', () => {
+            movieData.splice(i, 1);
+            let url = "http://localhost:1500/app/playlist";
+            let body = {
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                email: localStorage.getItem('mobtube-email'),
+                movieData: movieData
+              })
+            }
+            fetch(url, body).then(res => { return res.json() }).then((result) => {
+              if (result.status) {
+                localStorage.setItem('mobtube-movieData', JSON.stringify(result.movieData));
+                getPlaylist();
+              }
+            })
+          })
+        }
+      }
+    }
+    getPlaylist();
+  </script>
 </body>
 
 </html>
