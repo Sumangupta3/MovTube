@@ -1,0 +1,12 @@
+*{
+   padding: 0px;
+   margin: 0px;
+}
+body{
+    background: rgba(0, 0, 0,0.7) url('./Images/background.jpg');
+    background-size: 100%;
+    background-blend-mode:hue;
+}
+.bottom{
+    text-decoration: none;
+}
