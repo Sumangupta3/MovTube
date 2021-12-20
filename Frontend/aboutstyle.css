@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+*{
+    font-family: Roboto;
+    padding: 0px;
+    margin: 0px;
+ }
+ body{
+    background: rgba(0, 0, 0,0.7) url('./Images/background.jpg');
+    background-size: 100%;
+    background-blend-mode:hue;
+}
+.overview{
+    font-size: Bebas Neue;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    font-size: 3rem;
+  }
+  .question{
+    padding: 0 10px 0 0;
+    font-weight: bold;
+  }
+  .answer{
+    padding: 0 0px 0 0;
+  }
+  .movie-detail{
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    padding: 1rem;
+    font-size: 2rem;
+}
+.about{
+    width: 50%;
+    margin: 100px auto 100px auto;
+    text-align: left;
+  }
+  .about-1{
+    color: #fff;
+    margin-right: 50px;
+    width: 40vh;
+    height: 40vh;
+    border-radius: 100%;
+    float: left;
+  }
+  .font-white{
+    margin: 20px;
+    color: #fff;
+    font-size: larger;
+    letter-spacing: 1px;
+    font-size: 1rem;
+  }
+  .title{
+      font-size: 2rem;
+      font-weight: bold;
+  }
+  footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px;
+  }

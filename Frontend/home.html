@@ -36,20 +36,21 @@
     <h3>My Playlist</h3>
   </div>
   <div class="main-itis" id="playlist">
-    <!-- <div class="searchMovie">
-      <a class="movie" href="overview.html">
-        <img src="./Images/movie.jpg">
-        <div class="movie-info">
-          <h5 class="movie-title">Movie Title</h5>
-          <span class="rating">10</h3>
-        </div>
-      </a>
-      <div class="playlist-btn">
-        <button type="button" class="btn btn-secondary">Remove</button>
-      </div>
-    </div> -->
   </div>
+  <footer>
+    <button type="button" class="btn btn-outline-secondary btn-lg logout" onclick="logOut()">
+      Logout
+     </button>
+  </footer>
   <script>
+
+    function logOut(){
+      localStorage.removeItem('mobtube-movieData');
+      localStorage.removeItem('mobtube-email');
+      localStorage.removeItem('data');
+      localStorage.removeItem('overview');
+      location.href = './login.html'
+    }
 
     function addToList(e) {
       e.preventDefault();
@@ -91,6 +92,9 @@
       let url = `http://www.omdbapi.com/?t=${searchkey}&apikey=11aa1054`
       fetch(url).then(res => { return res.json() }).then(data => {
         if (data.Response === 'False') {
+          let searchCard = document.getElementById('searchCard');
+          searchCard.classList.add('display-none');
+          searchCard.innerHTML = ''
           let message = document.getElementById('message');
           message.innerHTML = data.Error
         } else {

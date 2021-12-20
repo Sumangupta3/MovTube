@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 *{
-   padding: 0px;
-   margin: 0px;
-}
+    font-family: Roboto;
+    padding: 0px;
+    margin: 0px;
+ }
 body{
     background: rgba(0, 0, 0,0.7) url('./Images/background.jpg');
     background-size: 100%;
