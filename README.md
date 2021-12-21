@@ -1,11 +1,19 @@
 # MovTube
-Movie web Lib
-STEPS to RUN
 
-1.Setup nodejs environment
+How to Run this Code? Follow these steps:
 
-2.Istall nodejs required modules
+Clone this Project https://github.com/Sumangupta3/MovTube.git
 
-3.Clone github repo
+Open your terminal in MovTube/ folder which contains all file.
 
-4.start nodejs and run login.html to get started with Project
+Create virtual environment: 
+Steps to create Virtual Environment
+
+
+Run this command in your Terminal or CMD:-  npm install
+
+and then write node/nodemon index.js 
+
+Now open MobTube in your editor and run login.html
+
+Deploy Link : https://mobtube.netlify.app/
