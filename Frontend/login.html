@@ -48,6 +48,12 @@
     </div>
   </section>
   <script>
+    sharedPrefrences();
+    function sharedPrefrences(){
+      if(localStorage.getItem('mobtube-email') && localStorage.getItem('mobtube-movieData')){
+        location.href = './home.html'
+      }
+    }
     function login(e) {
       e.preventDefault();
       let email = document.getElementById("typeEmailX-2").value;

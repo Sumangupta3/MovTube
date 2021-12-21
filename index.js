@@ -15,5 +15,5 @@ const playlistRoute = require('./routes/playlist');
 app.use("/app/user", userRoute);
 app.use("/app/playlist", playlistRoute);
 
-const port = 1500;
+const port = process.env.PORT || 1500;
 app.listen(port);
