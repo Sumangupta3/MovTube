@@ -64,7 +64,8 @@
       });
       if (flag) {
         movieData.push(data);
-        let url = "http://localhost:1500/app/playlist";
+        let url = "https://mobtube.herokuapp.com/app/playlist";
+        // let url = "http://localhost:1500/app/playlist";
         let body = {
           method: "POST",
           headers: {
@@ -150,7 +151,8 @@
           })
           document.getElementById("remove-btn-" + i).addEventListener('click', () => {
             movieData.splice(i, 1);
-            let url = "http://localhost:1500/app/playlist";
+            let url = "https://mobtube.herokuapp.com/app/playlist";
+            // let url = "http://localhost:1500/app/playlist";
             let body = {
               method: "POST",
               headers: {

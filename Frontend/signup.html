@@ -59,7 +59,8 @@
       let conPass = document.getElementById("typePasswordX").value;
       console.log(email + pass + conPass);
       if (pass === conPass) {
-        let signurl = "http://localhost:1500/app/user/signup";
+        let signurl = "https://mobtube.herokuapp.com/app/user/signup";
+        // let signurl = "http://localhost:1500/app/user/signup";
         let data = {
           method: "POST",
           headers: {
